@@ -10,12 +10,11 @@ using System;
 public class BehaviourGraph : EditorWindow
 {
     private BehaviourGraphView GraphView;
+    private NodeDataSource nodeDataSource;
     private string FileName= "New Behaviour Tree";
-    string[] NodeOptions = { "Parallel Node", "Selector Node", "Sequence Node" };
+    string[] NodeOptions => this.nodeDataSource.NodeOptions;
     int index = 0;
-    public NodeType[] options = new NodeType[]{NodeType.SELECTOR,
-    NodeType.SEQUENCE,
-    NodeType.PARALLEL, };
+    public NodeType[] options => this.nodeDataSource.options;
    [ MenuItem("Graph/Behaviour Tree Graph")]
     public static void OpenBehaviourGraphWindow()
     {
@@ -24,6 +23,8 @@ public class BehaviourGraph : EditorWindow
     }
     private void ConstructGraphView()
     {
+        this.nodeDataSource = new NodeDataSource();
+        this.nodeDataSource.RegisterNodeBuilder();
         this.GraphView = new BehaviourGraphView
         {
             name = "Behaviuor Graph"
